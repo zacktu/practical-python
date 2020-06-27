@@ -1,7 +1,9 @@
 # pcost.py
 
-def portfolio_cost():
-    with open('missing.csv', 'rt') as f:
+import sys
+
+def portfolio_cost(filename):
+    with open(filename, 'rt') as f:
         headers = next(f).split(',')
         total_price = 0.0
         for line in f:
@@ -12,5 +14,10 @@ def portfolio_cost():
                 print ('Error in line: ', line)
         return total_price
 
-cost = portfolio_cost()
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+    cost = portfolio_cost(filename)
+else:
+    cost = portfolio_cost('portfolio.csv')
+
 print('Total cost = ', cost)
