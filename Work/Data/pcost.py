@@ -1,4 +1,4 @@
-# portfolio_cost.py
+# pcost.py
 
 def portfolio_cost():
     with open('portfolio.csv', 'rt') as f:
