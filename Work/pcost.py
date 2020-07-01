@@ -1,10 +1,12 @@
 # pcost.py
 
 import csv
+import os
+
 def portfolio_cost(filename):
-    '''
+    """
     Computes the total cost (shares*price) of a portfolio file
-    '''
+    """
     total_cost = 0.0
 
     with open(filename, 'rt') as f:
