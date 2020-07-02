@@ -1,7 +1,6 @@
 # pcost.py
 
 import csv
-import os
 
 def portfolio_cost(filename):
     """
