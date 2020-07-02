@@ -1,7 +1,7 @@
 # portfolio_cost.py
 
 def portfolio_cost():
-    with open('portfolio.csv', 'rt') as f:
+    with open('Data/portfolio.csv', 'rt') as f:
         headers = next(f).split(',')
         total_price = 0.0
         for line in f:
