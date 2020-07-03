@@ -38,4 +38,4 @@ total = 0
 for name, shares, price in my_portfolio:
     total += shares * price
 
-print('Total value is :', total)
+print('\nTotal value is :', total)
