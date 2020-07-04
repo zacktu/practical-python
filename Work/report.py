@@ -15,12 +15,9 @@ def read_portfolio(filename):
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
-        header0 = headers[0]
-        header1 = headers[1]
-        header2 = headers[2]
         for row in rows:
             try:
-                dict = {header0:row[0], header1:row[1], header2: row[2]}
+                dict = {headers[0]:row[0], headers[1]:row[1], headers[2]: row[2]}
                 portfolio.append(dict)
             except ValueError:
                 print('Bad row:', row)
