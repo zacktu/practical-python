@@ -15,10 +15,13 @@ def read_portfolio(filename):
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
+        header0 = headers[0]
+        header1 = headers[1]
+        header2 = headers[2]
         for row in rows:
             try:
-                holding = (row[0], int(row[1]), float(row[2]))
-                portfolio.append(holding)
+                dict = {header0:row[0], header1:row[1], header2: row[2]}
+                portfolio.append(dict)
             except ValueError:
                 print('Bad row:', row)
     return portfolio
@@ -28,14 +31,15 @@ if len(sys.argv) == 2:
 else:
     filename = input('Enter a filename:')
 
+# for quick testing to avoid typing
+#filename = 'Data/portfolio.csv'
+
 my_portfolio = read_portfolio(filename)
 
-print('My Portfolio:')
-for name, shares, price in my_portfolio:
-    print(name, shares, price)
-
+print('\nMy Portfolio:')
 total = 0
-for name, shares, price in my_portfolio:
-    total += shares * price
+for stock in my_portfolio:
+    print(stock['name'], stock['shares'], stock['price'])
+    total += int(stock['shares']) * float(stock['price'])
 
 print('\nTotal value is :', total)
