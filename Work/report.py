@@ -1,42 +1,41 @@
 # report.py
 #
-# Exercise 2.4
+# Exercise 2.6 Dictionaries as a container
 
 import sys
 import csv
 
-def read_portfolio(filename):
+def read_prices(filename):
     """
-    Build the portfolio
+    Build the prices dictionary
     """
 
-    portfolio = []
-
+    prices = {}
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
-        headers = next(rows)
         for row in rows:
             try:
-                dict = {headers[0]:row[0], headers[1]:row[1], headers[2]: row[2]}
-                portfolio.append(dict)
-            except ValueError:
-                print('Bad row:', row)
-    return portfolio
+                next_row = {row[0]:row[1]}
+                prices.update(next_row)
+            except IndexError:
+                pass
+
+    return prices
+
+# for quick testing to avoid typing
+#filename = 'Data/prices.csv'
 
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
     filename = input('Enter a filename:')
 
-# for quick testing to avoid typing
-#filename = 'Data/portfolio.csv'
+stock_prices = read_prices(filename)
+print('stock_prices = ', stock_prices)
+print('Price of MSFT is ', stock_prices['MSFT'])
+print('Price of BAC is ', stock_prices['BAC'])
+print('Price of MMM is ', stock_prices['MMM'])
 
-my_portfolio = read_portfolio(filename)
+print("\nThat's all folks!")
 
-print('\nMy Portfolio:')
-total = 0
-for stock in my_portfolio:
-    print(stock['name'], stock['shares'], stock['price'])
-    total += int(stock['shares']) * float(stock['price'])
 
-print('\nTotal value is :', total)
