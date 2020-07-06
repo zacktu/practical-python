@@ -1,11 +1,11 @@
 # report.py
 #
-# Exercise 2.6 Dictionaries as a container
+# Exercise 2.7 Dictionaries as a container
 
 import sys
 import csv
 
-def read_prices(filename):
+def current_prices(filename):
     """
     Build the prices dictionary
     """
@@ -30,7 +30,7 @@ if len(sys.argv) == 2:
 else:
     filename = input('Enter a filename:')
 
-stock_prices = read_prices(filename)
+stock_prices = current_prices(filename)
 print('stock_prices = ', stock_prices)
 print('Price of MSFT is ', stock_prices['MSFT'])
 print('Price of BAC is ', stock_prices['BAC'])
