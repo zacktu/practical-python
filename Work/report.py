@@ -55,9 +55,17 @@ print('CURRENT PRICE OF IBM IS', current_prices['IBM'])
 
 original_portfolio = getoriginalportfolio(originalholdingsfilename)
 print('ORIGINAL PORTFOLIO =', original_portfolio)
+value = float(0.0)
 for stock in original_portfolio:
     print('name', stock['name'], stock['shares'], stock['price'])
-    print('current price is ', current_prices[stock['name']])
+    num_shares = float(stock['shares'])
+    original_price = float(stock['price'])
+    current_price = float(current_prices[stock['name']])
+    print('all data = ', num_shares, original_price, current_price)
+    profit = num_shares * (current_price - original_price)
+    print('profit = ', profit)
+    value += profit
+print('value = ', value)
 
 # # print('ORIGINAL PORTFOLIO')
 # # for stock in original_portfolio:
