@@ -1,6 +1,6 @@
-# report.py
+#Computer gain and loss for portfolii report.py
 #
-# Exercise 2.7 Computer gain and loss for portfolio
+# Exercise 2.9 Collecting data
 
 import csv
 
@@ -39,6 +39,17 @@ def getoriginalportfolio(originalholdings):
                 print('Bad row:', row)
         return portfolio
 
+def make_report(current_prices, original_portfolio):
+    stocklist = []
+    for stock in original_portfolio:
+        num_shares = stock['shares']
+        original_price = float(stock['price'])
+        current_price = float(current_prices[stock['name']])
+        gainloss = float(current_price - original_price)
+        stocklist.append([stock['name'], stock['shares'], current_price, gainloss])
+    return stocklist
+
+
 # for quick testing to avoid typing
 currentholdingsfilename = 'Data/prices.csv'
 originalholdingsfilename = 'Data/portfolio.csv'
@@ -51,8 +62,17 @@ originalholdingsfilename = 'Data/portfolio.csv'
 # stock_prices = current_prices(filename)
 
 current_prices = getcurrentprices(currentholdingsfilename)
+print('CURRENTPRICES: ', current_prices)
 
 original_portfolio = getoriginalportfolio(originalholdingsfilename)
+print('ORIGINAL PORTFOLIO: ', original_portfolio)
+
+stocklist = make_report(current_prices, original_portfolio)
+print('STOCKLIST: ', stocklist)
+for stock in stocklist:
+    print('next stock is', stock)
+
+'''
 value = float(0.0)
 for stock in original_portfolio:
     num_shares = float(stock['shares'])
@@ -62,6 +82,7 @@ for stock in original_portfolio:
     value += gainloss
     print(stock['name'], stock['shares'], original_price, current_price, gainloss)
 print('\nVALUE OF PORTFOLIO = ', value)
+'''
 
 print("\nThat's all folks!")
 
