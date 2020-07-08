@@ -58,10 +58,10 @@ for stock in original_portfolio:
     num_shares = float(stock['shares'])
     original_price = float(stock['price'])
     current_price = float(current_prices[stock['name']])
-    value += float(stock['shares']) * \
-             (float(current_prices[stock['name']]) -
-              float(stock['price']))
-print('value = ', value)
+    gainloss = float(stock['shares']) * (current_price - original_price)
+    value += gainloss
+    print(stock['name'], stock['shares'], original_price, current_price, gainloss)
+print('\nVALUE OF PORTFOLIO = ', value)
 
 print("\nThat's all folks!")
 
