@@ -1,6 +1,6 @@
 #Computer gain and loss for portfolii report.py
 #
-# Exercise 2.9 Collecting data
+# Exercise 2.10 Print a formatted table
 
 import csv
 
@@ -42,13 +42,12 @@ def getoriginalportfolio(originalholdings):
 def make_report(current_prices, original_portfolio):
     stocklist = []
     for stock in original_portfolio:
-        num_shares = stock['shares']
+        shares = int(stock['shares'])
         original_price = float(stock['price'])
         current_price = float(current_prices[stock['name']])
         gainloss = float(current_price - original_price)
-        stocklist.append([stock['name'], stock['shares'], current_price, gainloss])
+        stocklist.append([stock['name'], shares, current_price, gainloss])
     return stocklist
-
 
 # for quick testing to avoid typing
 currentholdingsfilename = 'Data/prices.csv'
@@ -62,15 +61,12 @@ originalholdingsfilename = 'Data/portfolio.csv'
 # stock_prices = current_prices(filename)
 
 current_prices = getcurrentprices(currentholdingsfilename)
-print('CURRENTPRICES: ', current_prices)
 
 original_portfolio = getoriginalportfolio(originalholdingsfilename)
-print('ORIGINAL PORTFOLIO: ', original_portfolio)
 
 stocklist = make_report(current_prices, original_portfolio)
-print('STOCKLIST: ', stocklist)
-for stock in stocklist:
-    print('next stock is', stock)
+for name, shares, price, change in stocklist:
+    print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
 
 '''
 value = float(0.0)
