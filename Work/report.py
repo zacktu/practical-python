@@ -1,6 +1,6 @@
 #Computer gain and loss for portfolii report.py
 #
-# Exercise 2.10 Print a formatted table
+# Exercise 2.11 Adding some headers
 
 import csv
 
@@ -65,6 +65,8 @@ current_prices = getcurrentprices(currentholdingsfilename)
 original_portfolio = getoriginalportfolio(originalholdingsfilename)
 
 stocklist = make_report(current_prices, original_portfolio)
+print('      Name     Shares      Price     Change')
+print('---------- ---------- ---------- ----------')
 for name, shares, price, change in stocklist:
     print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
 
