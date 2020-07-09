@@ -1,6 +1,6 @@
 #Computer gain and loss for portfolii report.py
 #
-# Exercise 2.11 Adding some headers
+# Exercise 2.12 Formatting Challenge
 
 import csv
 
@@ -68,7 +68,8 @@ stocklist = make_report(current_prices, original_portfolio)
 print('      Name     Shares      Price     Change')
 print('---------- ---------- ---------- ----------')
 for name, shares, price, change in stocklist:
-    print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+    dollarprice = '$' + str(price)
+    print(f'{name:>10s} {shares:>10d} {dollarprice:>10s} {change:>10.2f}')
 
 '''
 value = float(0.0)
