@@ -2,6 +2,7 @@
 #
 # Exercise 2.12 Formatting Challenge
 
+import sys
 import csv
 
 def getcurrentprices(currentportfolio):
@@ -31,13 +32,28 @@ def getoriginalportfolio(originalholdings):
     with open(originalholdings, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
-        for row in rows:
+
+        for rowno, row in enumerate(rows, start=1):
             try:
-                dict = {headers[0]:row[0], headers[1]:row[1], headers[2]: row[2]}
-                portfolio.append(dict)
+                record = dict(zip(headers, row))
+                portfolio.append(record)
             except ValueError:
                 print('Bad row:', row)
+
+        #print('THats all for now!')
+        #sys.exit()
         return portfolio
+
+    # with open(originalholdings, 'rt') as f:
+    #     rows = csv.reader(f)
+    #     headers = next(rows)
+    #     for row in rows:
+    #         try:
+    #             dict = {headers[0]:row[0], headers[1]:row[1], headers[2]: row[2]}
+    #             portfolio.append(dict)
+    #         except ValueError:
+    #             print('Bad row:', row)
+    #     return portfolio
 
 def make_report(current_prices, original_portfolio):
     stocklist = []
@@ -50,19 +66,21 @@ def make_report(current_prices, original_portfolio):
     return stocklist
 
 # for quick testing to avoid typing
-currentholdingsfilename = 'Data/prices.csv'
-originalholdingsfilename = 'Data/portfolio.csv'
+#currentholdingsfilename = 'Data/prices.csv'
+#originalholdingsfilename = 'Data/portfolio.csv'
+
+#stock_prices = current_prices(filename)
 
 # if len(sys.argv) == 2:
 #     filename = sys.argv[1]
 # else:
 #     filename = input('Enter a filename:')
-#
-# stock_prices = current_prices(filename)
 
-current_prices = getcurrentprices(currentholdingsfilename)
-
+originalholdingsfilename = input('Enter name of portfolio file:')
 original_portfolio = getoriginalportfolio(originalholdingsfilename)
+
+currentholdingsfilename = input('Enter name of current stock prices file:')
+current_prices = getcurrentprices(currentholdingsfilename)
 
 stocklist = make_report(current_prices, original_portfolio)
 print('      Name     Shares      Price     Change')
