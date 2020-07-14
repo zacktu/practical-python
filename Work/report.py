@@ -44,17 +44,6 @@ def getoriginalportfolio(originalholdings):
         #sys.exit()
         return portfolio
 
-    # with open(originalholdings, 'rt') as f:
-    #     rows = csv.reader(f)
-    #     headers = next(rows)
-    #     for row in rows:
-    #         try:
-    #             dict = {headers[0]:row[0], headers[1]:row[1], headers[2]: row[2]}
-    #             portfolio.append(dict)
-    #         except ValueError:
-    #             print('Bad row:', row)
-    #     return portfolio
-
 def make_report(current_prices, original_portfolio):
     stocklist = []
     for stock in original_portfolio:
