@@ -25,15 +25,13 @@ def portfolio_cost(filename):
 
     return total_cost
 
-''' Use hardwired filename instead of prompt
 import sys
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
     filename = input('Enter a filename:')
-'''
 
-filename = 'Data/portfolio.csv'
+#filename = 'Data/portfolio.csv'
 
 cost = portfolio_cost(filename)
 print('\nTotal cost:', cost)
