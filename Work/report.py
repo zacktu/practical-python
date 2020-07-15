@@ -78,18 +78,6 @@ for name, shares, price, change in stocklist:
     dollarprice = '$' + str(price)
     print(f'{name:>10s} {shares:>10d} {dollarprice:>10s} {change:>10.2f}')
 
-'''
-value = float(0.0)
-for stock in original_portfolio:
-    num_shares = float(stock['shares'])
-    original_price = float(stock['price'])
-    current_price = float(current_prices[stock['name']])
-    gainloss = float(stock['shares']) * (current_price - original_price)
-    value += gainloss
-    print(stock['name'], stock['shares'], original_price, current_price, gainloss)
-print('\nVALUE OF PORTFOLIO = ', value)
-'''
-
 print("\nThat's all folks!")
 
 
