@@ -132,25 +132,15 @@ def print_report(stocklist):
 # current_holdings_filename = 'Data/prices.csv'
 # original_holdings_filename = 'Data/portfolio.csv'
 
-# stock_prices = current_prices(filename)
+if len(sys.argv) == 3:
+     original_holdings_filename = sys.argv[1]
+     current_holdings_filename = sys.argv[2]
+else:
+    original_holdings_filename = input('Enter name of portfolio file:')
+    current_holdings_filename = input('Enter name of current stock prices file:')
 
-# if len(sys.argv) == 2:
-#     filename = sys.argv[1]
-# else:
-#     filename = input('Enter a filename:')
-
-original_holdings_filename = input('Enter name of portfolio file:')
 original_portfolio = get_original_portfolio(original_holdings_filename)
-current_holdings_filename = input('Enter name of current stock prices file:')
 current_prices = get_current_prices(current_holdings_filename)
 stocklist = build_stocklist(current_prices, original_portfolio)
 print_report(stocklist)
 print("\nThat's all folks!")
-
-# if len(sys.argv) == 2:
-#     filename = sys.argv[1]
-# else:
-#     filename = input('Enter a filename:')
-
-
-
