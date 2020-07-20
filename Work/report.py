@@ -5,13 +5,13 @@
 import sys
 import csv
 
-def getcurrentprices(currentportfolio):
+def get_current_prices(current_portfolio):
     """
     Build the prices dictionary
     """
 
     current_prices = {}
-    with open(currentportfolio, 'rt') as f:
+    with open(current_portfolio, 'rt') as f:
         rows = csv.reader(f)
         for row in rows:
             try:
@@ -21,7 +21,7 @@ def getcurrentprices(currentportfolio):
                 pass
     return current_prices
 
-def getoriginalportfolio(originalholdings):
+def get_original_portfolio(original_holdings):
 
     """
     Build the portfolio
@@ -29,7 +29,7 @@ def getoriginalportfolio(originalholdings):
 
     portfolio = []
 
-    with open(originalholdings, 'rt') as f:
+    with open(original_holdings, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
 
@@ -55,8 +55,8 @@ def make_report(current_prices, original_portfolio):
     return stocklist
 
 # for quick testing to avoid typing
-#currentholdingsfilename = 'Data/prices.csv'
-#originalholdingsfilename = 'Data/portfolio.csv'
+#current_holdings_filename = 'Data/prices.csv'
+#original_holdings_filename = 'Data/portfolio.csv'
 
 #stock_prices = current_prices(filename)
 
@@ -65,11 +65,11 @@ def make_report(current_prices, original_portfolio):
 # else:
 #     filename = input('Enter a filename:')
 
-originalholdingsfilename = input('Enter name of portfolio file:')
-original_portfolio = getoriginalportfolio(originalholdingsfilename)
+original_holdings_filename = input('Enter name of portfolio file:')
+original_portfolio = get_original_portfolio(original_holdings
 
-currentholdingsfilename = input('Enter name of current stock prices file:')
-current_prices = getcurrentprices(currentholdingsfilename)
+current_holdings_filename = input('Enter name of current stock prices file:')
+current_prices = get_current_prices(current_holdings_filename)
 
 stocklist = make_report(current_prices, original_portfolio)
 print('      Name     Shares      Price     Change')
