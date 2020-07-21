@@ -1,3 +1,6 @@
+'''
+I don't want to see this at all.
+
 # gzip.py
 
 import os
@@ -12,3 +15,4 @@ with gzip.open('Data/portfolio.csv.gz', 'rt') as f:
         print(line, end='')
 
 f.close()
+'''
