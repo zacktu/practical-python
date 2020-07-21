@@ -1,11 +1,11 @@
 # fileparse.py
 #
-# Exercise 3.3
+# Exercise 3.5 Performing Type Conversion
 
 # fileparse.py
 import csv
 
-def parse_csv(filename, select=None):
+def parse_csv(filename, select=None, types=None):
     '''
     Parse a CSV file into a list of records
     '''
@@ -29,7 +29,9 @@ def parse_csv(filename, select=None):
                 continue
             # Filter the row if specific columns were selected
             if indices:
-                row = [ row[index] for index in indices ]
+                row = [row[index] for index in indices ]
+            if types:
+                row = [func(val) for func, val in zip(types, row)]
 
             # Make a dictionary
             record = dict(zip(headers, row))
