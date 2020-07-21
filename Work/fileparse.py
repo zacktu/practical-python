@@ -1,40 +1,49 @@
 # fileparse.py
 #
-# Exercise 3.5 Performing Type Conversion
+# Exercise 3.6 Working Without Headers
 
 # fileparse.py
 import csv
 
-def parse_csv(filename, select=None, types=None):
+def parse_csv(filename, select=None, types=None, has_headers=True):
     '''
     Parse a CSV file into a list of records
     '''
     with open(filename) as f:
         rows = csv.reader(f)
 
-        # Read the file headers
-        headers = next(rows)
-
-        # If a column selector was given, find indices of the specified columns.
-        # Also narrow the set of headers used for resulting dictionaries
-        if select:
-            indices = [headers.index(colname) for colname in select]
-            headers = select
+        if not has_headers:
+            records = []
+            for row in rows:
+                if not row:    # Skip rows with no data
+                    continue
+                if types:
+                    row = [func(val) for func, val in zip(types, row)]
+                records.append(row)
         else:
-            indices = []
+            # Read the file headers
+            headers = next(rows)
 
-        records = []
-        for row in rows:
-            if not row:    # Skip rows with no data
-                continue
-            # Filter the row if specific columns were selected
-            if indices:
-                row = [row[index] for index in indices ]
-            if types:
-                row = [func(val) for func, val in zip(types, row)]
+            # If a column selector was given, find indices of the specified columns.
+            # Also narrow the set of headers used for resulting dictionaries
+            if select:
+                indices = [headers.index(colname) for colname in select]
+                headers = select
+            else:
+                indices = []
 
-            # Make a dictionary
-            record = dict(zip(headers, row))
-            records.append(record)
+            records = []
+            for row in rows:
+                if not row:    # Skip rows with no data
+                    continue
+                # Filter the row if specific columns were selected
+                if indices:
+                    row = [row[index] for index in indices ]
+                if types:
+                    row = [func(val) for func, val in zip(types, row)]
+
+                # Make a dictionary
+                record = dict(zip(headers, row))
+                records.append(record)
 
         return records
