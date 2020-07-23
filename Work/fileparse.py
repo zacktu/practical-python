@@ -1,16 +1,19 @@
 # fileparse.py
 #
-# Exercise 3.6 Working Without Headers
+# Exercise 3.7 Picking a different column delimiter
 
 # fileparse.py
 import csv
 
-def parse_csv(filename, select=None, types=None, has_headers=True):
+def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=''):
     '''
     Parse a CSV file into a list of records
     '''
     with open(filename) as f:
-        rows = csv.reader(f)
+        if delimiter == '':
+            rows = csv.reader(f)
+        else:
+            rows = csv.reader(f, delimiter=delimiter)
 
         if not has_headers:
             records = []
