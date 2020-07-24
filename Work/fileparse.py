@@ -19,7 +19,6 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter='')
                 rows = csv.reader(f, delimiter=delimiter)
 
             if not has_headers:
-                print('NO HEADERS')
                 records = []
                 for row in rows:
                     if not row:    # Skip rows with no data
@@ -30,7 +29,6 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter='')
                         row = [func(val) for func, val in zip(types, row)]
                     records.append(row)
             else:
-                print('HEADERS')
                 # Read the file headers
                 headers = next(rows)
 
@@ -57,5 +55,5 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter='')
                     records.append(record)
 
             return records
-    except ValueError as e:
-        print()
+    except RuntimeError as e:
+        print('ERROR" ', e)
