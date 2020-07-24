@@ -58,4 +58,4 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter='')
 
             return records
     except ValueError as e:
-        print(e)
+        print()
