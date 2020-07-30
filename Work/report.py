@@ -12,15 +12,12 @@ def get_current_prices(current_portfolio):
     """
 
     current_prices = {}
-    print('ZZZZZ current_prices = ', current_prices)
     with open(current_portfolio, 'rt') as f:
         rows = csv.reader(f)
         for row in rows:
             try:
                 nextrow = {row[0]: row[1]}
-                print('QQQQQ nextrow = ', nextrow)
                 current_prices.update(nextrow)
-                print('ZZZZZ current_prices = ', current_prices)
             except IndexError:
                 pass
     return current_prices
@@ -72,22 +69,23 @@ def print_report(stocklist):
 
 
 # for quick testing to avoid typing
-# current_holdings_filename = 'Data/prices.csv'
+# current_prices_filename = 'Data/prices.csv'
 # original_holdings_filename = 'Data/portfolio.csv'
 
 if len(sys.argv) == 3:
      original_holdings_filename = sys.argv[1]
-     current_holdings_filename = sys.argv[2]
+     current_prices_filename = sys.argv[2]
 else:
     original_holdings_filename = input('Enter name of portfolio file:')
-    current_holdings_filename = \
+    current_prices_filename = \
         input('Enter name of current stock prices file:')
 
 #original_portfolio = get_original_portfolio(original_holdings_filename)
 original_portfolio = fileparse.parse_csv(original_holdings_filename)
-print('XXXXX original_portfolio = ', original_portfolio)
-current_prices = get_current_prices(current_holdings_filename)
-print('YYYYY current_prices = ', current_prices)
-stocklist = build_stocklist(current_prices, original_portfolio)
+#current_prices = get_current_prices(current_prices_filename)
+current_prices = fileparse.parse_csv(current_prices_filename, types=[str, float],
+                                     has_headers=False)
+current_prices_dict = dict(current_prices)
+stocklist = build_stocklist(current_prices_dict, original_portfolio)
 print_report(stocklist)
 print("\nThat's all folks!")
