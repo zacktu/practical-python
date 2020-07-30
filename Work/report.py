@@ -4,6 +4,7 @@
 
 import sys
 import csv
+import fileparse
 
 def get_current_prices(current_portfolio):
     """
@@ -11,12 +12,15 @@ def get_current_prices(current_portfolio):
     """
 
     current_prices = {}
+    print('ZZZZZ current_prices = ', current_prices)
     with open(current_portfolio, 'rt') as f:
         rows = csv.reader(f)
         for row in rows:
             try:
                 nextrow = {row[0]: row[1]}
+                print('QQQQQ nextrow = ', nextrow)
                 current_prices.update(nextrow)
+                print('ZZZZZ current_prices = ', current_prices)
             except IndexError:
                 pass
     return current_prices
@@ -63,7 +67,8 @@ def print_report(stocklist):
     print('---------- ---------- ---------- ----------')
     for name, shares, price, change in stocklist:
         dollarprice = '$' + str(price)
-        print(f'{name:>10s} {shares:>10d} {dollarprice:>10s} {change:>10.2f}')
+        print(f'{name:>10s} {shares:>10d} {dollarprice:>10s}'
+                    f'{change:>10.2f}')
 
 
 # for quick testing to avoid typing
@@ -75,10 +80,14 @@ if len(sys.argv) == 3:
      current_holdings_filename = sys.argv[2]
 else:
     original_holdings_filename = input('Enter name of portfolio file:')
-    current_holdings_filename = input('Enter name of current stock prices file:')
+    current_holdings_filename = \
+        input('Enter name of current stock prices file:')
 
-original_portfolio = get_original_portfolio(original_holdings_filename)
+#original_portfolio = get_original_portfolio(original_holdings_filename)
+original_portfolio = fileparse.parse_csv(original_holdings_filename)
+print('XXXXX original_portfolio = ', original_portfolio)
 current_prices = get_current_prices(current_holdings_filename)
+print('YYYYY current_prices = ', current_prices)
 stocklist = build_stocklist(current_prices, original_portfolio)
 print_report(stocklist)
 print("\nThat's all folks!")

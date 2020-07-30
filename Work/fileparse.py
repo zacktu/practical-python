@@ -1,8 +1,9 @@
 # fileparse.py
 #
-# Exercise 3.9 Catching Exceptions
+# Exercise 3.12 Using your library module
+#
+# Usage parse_csv(filename, select, types, has_headers, delimiter)
 
-# fileparse.py
 import csv
 
 def parse_csv(filename, select=None, types=None,
@@ -32,6 +33,9 @@ def parse_csv(filename, select=None, types=None,
                         try:
                             row = [func(val) for func, val in zip(types,
                                                                   row)]
+                            row = tuple(row)
+                            #row = {func(val) for func, val in zip(types,
+                            #                                      row)}
                             records.append(row)
                         except ValueError as e:
                             print('ERROR in row number', rowno, ': ', e)
