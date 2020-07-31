@@ -3,6 +3,7 @@
 # Exercise 3.12 Using your library module
 #
 # Usage report.py portfoliocsvfile pricesfilecsvfile
+#
 
 import sys
 import csv
