@@ -17,53 +17,13 @@ def read_prices(filename):
     return dict(fileparse.parse_csv(filename, types=[str, float],
                                          has_headers=False))
 
-def get_current_prices(current_portfolio):
-    """
-    Build the prices dictionary
-    """
-
-    current_prices = {}
-    with open(current_portfolio, 'rt') as f:
-        rows = csv.reader(f)
-        for row in rows:
-            try:
-                nextrow = {row[0]: row[1]}
-                current_prices.update(nextrow)
-            except IndexError:
-                pass
-    return current_prices
-
-
-def get_original_portfolio(original_holdings):
-    """
-    Build the portfolio
-    """
-
-    portfolio = []
-
-    with open(original_holdings, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-
-        for rowno, row in enumerate(rows, start=1):
-            try:
-                record = dict(zip(headers, row))
-                portfolio.append(record)
-            except ValueError:
-                print('Bad row:', row)
-
-        # print('THats all for now!')
-        # sys.exit()
-        return portfolio
-
-
 def build_stocklist(current_prices, original_portfolio):
     stocklist = []
     for stock in original_portfolio:
-        shares = int(stock['shares'])
-        original_price = float(stock['price'])
-        current_price = float(current_prices[stock['name']])
-        gainloss = float(current_price - original_price)
+        shares = stock['shares']
+        original_price = stock['price']
+        current_price = current_prices[stock['name']]
+        gainloss = current_price - original_price
         stocklist.append([stock['name'], shares, current_price, gainloss])
     return stocklist
 
@@ -91,15 +51,9 @@ else:
     current_prices_filename = \
         input('Enter name of current stock prices file:')
 
-#original_portfolio = get_original_portfolio(original_holdings_filename)
-#original_portfolio = fileparse.parse_csv(original_holdings_filename)
-#current_prices = get_current_prices(current_prices_filename)
-#current_prices = fileparse.parse_csv(current_prices_filename, types=[str, float],
-
 original_portfolio = read_portfolio(original_holdings_filename)
 current_prices = read_prices(current_prices_filename)
 
-#current_prices_dict = dict(current_prices)
 stocklist = build_stocklist(current_prices, original_portfolio)
 print_report(stocklist)
 print("\nThat's all folks!")
