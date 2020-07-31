@@ -9,6 +9,14 @@ import sys
 import csv
 import fileparse
 
+def read_portfolio(filename):
+    return fileparse.parse_csv(filename, select=['name', 'shares', 'price'],
+                               types=[str, int, float])
+
+def read_prices(filename):
+    return dict(fileparse.parse_csv(filename, types=[str, float],
+                                         has_headers=False))
+
 def get_current_prices(current_portfolio):
     """
     Build the prices dictionary
@@ -84,11 +92,14 @@ else:
         input('Enter name of current stock prices file:')
 
 #original_portfolio = get_original_portfolio(original_holdings_filename)
-original_portfolio = fileparse.parse_csv(original_holdings_filename)
+#original_portfolio = fileparse.parse_csv(original_holdings_filename)
 #current_prices = get_current_prices(current_prices_filename)
-current_prices = fileparse.parse_csv(current_prices_filename, types=[str, float],
-                                     has_headers=False)
-current_prices_dict = dict(current_prices)
-stocklist = build_stocklist(current_prices_dict, original_portfolio)
+#current_prices = fileparse.parse_csv(current_prices_filename, types=[str, float],
+
+original_portfolio = read_portfolio(original_holdings_filename)
+current_prices = read_prices(current_prices_filename)
+
+#current_prices_dict = dict(current_prices)
+stocklist = build_stocklist(current_prices, original_portfolio)
 print_report(stocklist)
 print("\nThat's all folks!")
