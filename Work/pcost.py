@@ -1,6 +1,12 @@
 # pcost.py
+#
+# Exercise 3.14 Using more library imports
+#
+# Usage: python pcost.py filename
+#
 
-import csv
+import sys
+import fileparse
 
 def portfolio_cost(filename):
     """
@@ -8,29 +14,26 @@ def portfolio_cost(filename):
     """
     total_cost = 0.0
 
-    with open(filename, 'rt') as f:
-        rows = csv.reader(f)
-        headers = next(rows)
-
-        for rowno, row in enumerate(rows, start=1):
-            record = dict(zip(headers, row))
-            try:
-                print(record['name'], record['shares'], record['price'])
-                numshares = int(record['shares'])
-                shareprice = float(record['price'])
-                total_cost += numshares * shareprice
-            # This catches errors in int() and float() conversions above
-            except ValueError:
-                print(f'Row {rowno}: Bad row: {row}')
+    portfolio = fileparse.parse_csv(filename, select=['name', 'shares', 'price'],
+                                   types=[str, int, float])
+    rowno = 0
+    total_cost = 0
+    try:
+        for stock in portfolio:
+            rowno+= 1
+            print(stock['name'], stock['shares'], stock['price'])
+            total_cost += stock['shares'] * stock['price']
+    except ValueError:
+        print(f'Row {rowno}: Bad row: {row}')
 
     return total_cost
 
-import sys
 if len(sys.argv) == 2:
     filename = sys.argv[1]
 else:
     filename = input('Enter a filename:')
 
+# for testing with same file
 #filename = 'Data/portfolio.csv'
 
 cost = portfolio_cost(filename)
