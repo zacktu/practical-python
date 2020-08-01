@@ -1,6 +1,6 @@
 # pcost.py
 #
-# Exercise 3.14 main() functions
+# Exercise 3.15 main() functions
 #
 # Usage: python pcost.py portfoliofile
 #

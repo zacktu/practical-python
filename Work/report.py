@@ -39,21 +39,26 @@ def print_report(stocklist):
                     f'{change:>10.2f}')
 
 
-# for quick testing to avoid typing
-# current_prices_filename = 'Data/prices.csv'
-# original_holdings_filename = 'Data/portfolio.csv'
+def main(args):
+    # for quick testing to avoid typing
+    # current_prices_filename = 'Data/prices.csv'
+    # original_holdings_filename = 'Data/portfolio.csv'
 
-if len(sys.argv) == 3:
-     original_holdings_filename = sys.argv[1]
-     current_prices_filename = sys.argv[2]
-else:
-    original_holdings_filename = input('Enter name of portfolio file:')
-    current_prices_filename = \
-        input('Enter name of current stock prices file:')
+    if len(args) != 3:
+        original_holdings_filename = input('Enter name of portfolio file:')
+        current_prices_filename = \
+                    input('Enter name of current stock prices file:')
+    else:
+        original_holdings_filename = args[1]
+        current_prices_filename = args[2]
 
-original_portfolio = read_portfolio(original_holdings_filename)
-current_prices = read_prices(current_prices_filename)
+    original_portfolio = read_portfolio(original_holdings_filename)
+    current_prices = read_prices(current_prices_filename)
 
-stocklist = build_stocklist(current_prices, original_portfolio)
-print_report(stocklist)
-print("\nThat's all folks!")
+    stocklist = build_stocklist(current_prices, original_portfolio)
+    print_report(stocklist)
+    print("\nThat's all folks!")
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
