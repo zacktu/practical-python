@@ -1,8 +1,8 @@
 # pcost.py
 #
-# Exercise 3.14 Using more library imports
+# Exercise 3.14 main() functions
 #
-# Usage: python pcost.py filename
+# Usage: python pcost.py portfoliofile
 #
 
 import sys
@@ -28,13 +28,18 @@ def portfolio_cost(filename):
 
     return total_cost
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = input('Enter a filename:')
+def main(args):
+    if len(args) != 2:
+        filename = input('Enter a filename:')
+    else:
+        filename = args[1]
 
-# for testing with same file
-#filename = 'Data/portfolio.csv'
+    # for testing with same file
+    #filename = 'Data/portfolio.csv'
 
-cost = portfolio_cost(filename)
-print('\nTotal cost:', cost)
+    cost = portfolio_cost(filename)
+    print('\nTotal cost:', cost)
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)
