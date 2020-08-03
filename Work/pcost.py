@@ -25,7 +25,7 @@ def portfolio_cost(filename):
             print(stock['name'], stock['shares'], stock['price'])
             total_cost += stock['shares'] * stock['price']
     except ValueError:
-        print(f'Row {rowno}: Bad row: {row}')
+        print(f'Row {rowno}: Bad row: {stock}')
 
     return total_cost
 
