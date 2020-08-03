@@ -1,20 +1,20 @@
 # Computer gain and loss for portfolii report.py
 #
-# Exercise 3.12 Using your library module
+# Exercise 3.17: From filenames to file-like objects
 #
 # Usage report.py portfoliocsvfile pricesfilecsvfile
 #
 
-import sys
-import csv
 import fileparse
 
 def read_portfolio(filename):
-    return fileparse.parse_csv(filename, select=['name', 'shares', 'price'],
+    fileobject = open(filename, 'rt')
+    return fileparse.parse_csv(fileobject, select=['name', 'shares', 'price'],
                                types=[str, int, float])
 
 def read_prices(filename):
-    return dict(fileparse.parse_csv(filename, types=[str, float],
+    fileobject = open(filename, 'rt')
+    return dict(fileparse.parse_csv(fileobject, types=[str, float],
                                          has_headers=False))
 
 def build_stocklist(current_prices, original_portfolio):
@@ -38,6 +38,12 @@ def print_report(stocklist):
         print(f'{name:>10s} {shares:>10d} {dollarprice:>10s}'
                     f'{change:>10.2f}')
 
+def portfolio_report(portfolio_file, prices_file):
+    original_portfolio = read_portfolio(portfolio_file)
+    current_prices = read_prices(prices_file)
+    stocklist = build_stocklist(current_prices, original_portfolio)
+    print_report(stocklist)
+    print("\nThat's all folks!")
 
 def main(args):
     # for quick testing to avoid typing
@@ -51,13 +57,7 @@ def main(args):
     else:
         original_holdings_filename = args[1]
         current_prices_filename = args[2]
-
-    original_portfolio = read_portfolio(original_holdings_filename)
-    current_prices = read_prices(current_prices_filename)
-
-    stocklist = build_stocklist(current_prices, original_portfolio)
-    print_report(stocklist)
-    print("\nThat's all folks!")
+    portfolio_report(original_holdings_filename, current_prices_filename)
 
 if __name__ == '__main__':
     import sys

@@ -1,8 +1,8 @@
 # pcost.py
 #
-# Exercise 3.15 main() functions
+# Exercise 3.17: From filenames to file-like objects
 #
-# Usage: python pcost.py portfoliofile
+# Usage: python pcost.py portfoliofilename
 #
 
 import sys
@@ -14,7 +14,8 @@ def portfolio_cost(filename):
     """
     total_cost = 0.0
 
-    portfolio = fileparse.parse_csv(filename, select=['name', 'shares', 'price'],
+    fileobject = open(filename, 'rt')
+    portfolio = fileparse.parse_csv(fileobject, select=['name', 'shares', 'price'],
                                    types=[str, int, float])
     rowno = 0
     total_cost = 0
