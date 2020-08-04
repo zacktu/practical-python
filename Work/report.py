@@ -1,63 +1,59 @@
 # Computer gain and loss for portfolii report.py
 #
-# Exercise 3.17: From filenames to file-like objects
+# Exercise 3.18: Fixing existing functions
 #
-# Usage report.py portfoliocsvfile pricesfilecsvfile
+# Usage report.py portfoliofile pricesfile
 #
 
 import fileparse
 
 def read_portfolio(filename):
-    fileobject = open(filename, 'rt')
-    return fileparse.parse_csv(fileobject, select=['name', 'shares', 'price'],
-                               types=[str, int, float])
+    with open(filename) as lines:
+        return fileparse.parse_csv(lines,
+                select=['name', 'shares', 'price'],
+                types=[str, int, float])
 
 def read_prices(filename):
-    fileobject = open(filename, 'rt')
-    return dict(fileparse.parse_csv(fileobject, types=[str, float],
-                                         has_headers=False))
+    with open(filename) as lines:
+        return dict(fileparse.parse_csv(lines,
+                types=[str, float],
+                has_headers=False))
 
-def build_stocklist(current_prices, original_portfolio):
+def make_report_data(original_portfolio, current_prices):
     stocklist = []
     for stock in original_portfolio:
-        shares = stock['shares']
-        original_price = stock['price']
         current_price = current_prices[stock['name']]
-        gainloss = current_price - original_price
-        stocklist.append([stock['name'], shares, current_price, gainloss])
+        gainloss = current_price - stock['price']
+        stocklist.append([stock['name'], stock['shares'],
+                current_price, gainloss])
     return stocklist
 
 def print_report(stocklist):
     '''
     :format and print the stock report
     '''
-    print('      Name     Shares      Price     Change')
-    print('---------- ---------- ---------- ----------')
-    for name, shares, price, change in stocklist:
-        dollarprice = '$' + str(price)
-        print(f'{name:>10s} {shares:>10d} {dollarprice:>10s}'
-                    f'{change:>10.2f}')
+    headers = ('Name', 'Price', 'Stock', 'Change')
+    print('%10s %10s %10s %10s' % headers)
+    print(('-' * 10 + ' ') * len(headers))
+    for stock in stocklist:
+        print('%10s %10d %10.2f %10.2f' % tuple(stock))
 
 def portfolio_report(portfolio_file, prices_file):
     original_portfolio = read_portfolio(portfolio_file)
     current_prices = read_prices(prices_file)
-    stocklist = build_stocklist(current_prices, original_portfolio)
-    print_report(stocklist)
-    print("\nThat's all folks!")
+    report = make_report_data(original_portfolio, current_prices)
+    print_report(report)
 
 def main(args):
-    # for quick testing to avoid typing
-    # current_prices_filename = 'Data/prices.csv'
-    # original_holdings_filename = 'Data/portfolio.csv'
-
     if len(args) != 3:
-        original_holdings_filename = input('Enter name of portfolio file:')
-        current_prices_filename = \
-                    input('Enter name of current stock prices file:')
+        # portfolo_filename = 'Data/portfolio.csv'
+        # prices_filename = 'Data/prices.csv'
+        raise SystemExit('Usage: %s portfoliofile pricefile' % args[0])
     else:
-        original_holdings_filename = args[1]
-        current_prices_filename = args[2]
-    portfolio_report(original_holdings_filename, current_prices_filename)
+        portfolio_filename = args[1]
+        prices_filename = args[2]
+
+    portfolio_report(portfolio_filename, prices_filename)
 
 if __name__ == '__main__':
     import sys
