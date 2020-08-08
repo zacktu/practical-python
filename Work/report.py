@@ -6,26 +6,31 @@
 #
 
 import fileparse
+from stock import Stock
 
 def read_portfolio(filename):
-    with open(filename) as lines:
-        return fileparse.parse_csv(lines,
-                select=['name', 'shares', 'price'],
-                types=[str, int, float])
+    with open('Data/portfolio.csv') as lines:
+        portdicts = fileparse.parse_csv(
+                    lines,
+                    select=['name', 'shares', 'price'],
+                    types=[str, int, float])
+        portfolio = [Stock(q['name'], q['shares'], q['price'])
+                            for q in portdicts]
+        return portfolio
 
 def read_prices(filename):
     with open(filename) as lines:
-        return dict(fileparse.parse_csv(lines,
+        return dict(fileparse.parse_csv(
+                lines,
                 types=[str, float],
                 has_headers=False))
 
 def make_report_data(original_portfolio, current_prices):
     stocklist = []
     for stock in original_portfolio:
-        current_price = current_prices[stock['name']]
-        gainloss = current_price - stock['price']
-        stocklist.append([stock['name'], stock['shares'],
-                current_price, gainloss])
+        current_price = current_prices[stock.name]
+        gainloss = current_price - stock.price
+        stocklist.append([stock.name, stock.shares, current_price, gainloss])
     return stocklist
 
 def print_report(stocklist):
