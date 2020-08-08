@@ -4,6 +4,7 @@
 #
 # stock.py -- a class to represent stocks
 #
+
 class Stock:
     def __init__(self, name, shares, price):
         self.name = name
