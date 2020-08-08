@@ -10,11 +10,11 @@ class Stock:
         self.shares = shares
         self.price = price
 
-    def cost(s):
-        return s.shares * s.price
+    def cost(self):
+        return self.shares * self.price
 
-    def sell(s, numtosell):
-        s.shares -= numtosell
-        return s.shares
+    def sell(self, numtosell):
+        self.shares -= numtosell
+        return self.shares
 
 
