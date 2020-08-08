@@ -1,6 +1,6 @@
 # Computer gain and loss for portfolii report.py
 #
-# Exercise 3.18: Fixing existing functions
+# Exercise 4.4 Using your class
 #
 # Usage report.py portfoliofile pricesfile
 #
