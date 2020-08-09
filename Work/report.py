@@ -1,21 +1,22 @@
 # Computer gain and loss for portfolii report.py
 #
-# Exercise 4.4 Using your class
+# Exercise 4.6: Using Inheritance to Produce Different Output
 #
 # Usage report.py portfoliofile pricesfile
 #
 
 import fileparse
 from stock import Stock
+#from tableformat import TableFormatter
+from tableformat import TextTableFormatter
 
 def read_portfolio(filename):
     with open('Data/portfolio.csv') as lines:
         portdicts = fileparse.parse_csv(
-                    lines,
-                    select=['name', 'shares', 'price'],
-                    types=[str, int, float])
-        portfolio = [Stock(q['name'], q['shares'], q['price'])
-                            for q in portdicts]
+                lines,
+                select=['name', 'shares', 'price'],
+                types=[str, int, float])
+        portfolio = [Stock(q['name'], q['shares'], q['price']) for q in portdicts]
         return portfolio
 
 def read_prices(filename):
@@ -33,21 +34,23 @@ def make_report_data(original_portfolio, current_prices):
         stocklist.append([stock.name, stock.shares, current_price, gainloss])
     return stocklist
 
-def print_report(stocklist):
+def print_report(stocklist, formatter):
     '''
-    :format and print the stock report
+    # Print a formatted table from a list of (name, shares, price, change) tuples.
+    # Print format is specified by formatter.
     '''
-    headers = ('Name', 'Price', 'Stock', 'Change')
-    print('%10s %10s %10s %10s' % headers)
-    print(('-' * 10 + ' ') * len(headers))
-    for stock in stocklist:
-        print('%10s %10d %10.2f %10.2f' % tuple(stock))
+
+    formatter.headings(['Name','Shares','Price','Change'])
+    for name, shares, price, change in stocklist:
+        rowdata = [name, str(shares), f'{price:0.2f}', f'{change:0.2f}']
+        formatter.row(rowdata)
 
 def portfolio_report(portfolio_file, prices_file):
-    original_portfolio = read_portfolio(portfolio_file)
-    current_prices = read_prices(prices_file)
-    report = make_report_data(original_portfolio, current_prices)
-    print_report(report)
+    portfolio = read_portfolio(portfolio_file)
+    prices = read_prices(prices_file)
+    report = make_report_data(portfolio, prices)
+    formatter = TextTableFormatter()
+    print_report(report, formatter)
 
 def main(args):
     if len(args) != 3:
