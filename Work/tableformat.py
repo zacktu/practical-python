@@ -31,3 +31,23 @@ class TextTableFormatter(TableFormatter):
         for d in rowdata:
             print(f'{d:>10s}', end=' ')
         print()
+
+class CSVTableFormatter(TableFormatter):
+    '''
+    Output portfolio data in CSV format.
+    '''
+    def headings(self, headers):
+        print(','.join(headers))
+
+    def row(self, rowdata):
+        print(','.join(rowdata))
+
+class HTMLTableFormatter(TableFormatter):
+    '''
+    Output portfolio data in HTML format.
+    '''
+    def headings(self, headers):
+        print('<tr><th>'+'<th><th>'.join(headers)+'<th><tr>')
+
+    def row(self, rowdata):
+        print('<tr><th>'+'<th><th>'.join(rowdata)+'<th><tr>')
