@@ -50,4 +50,4 @@ class HTMLTableFormatter(TableFormatter):
         print('<tr><th>'+'<th><th>'.join(headers)+'<th><tr>')
 
     def row(self, rowdata):
-        print('<tr><th>'+'<th><th>'.join(rowdata)+'<th><tr>')
+        print('<tr><td>'+'<td><td>'.join(rowdata)+'<td><tr>')
