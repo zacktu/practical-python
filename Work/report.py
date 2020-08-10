@@ -1,16 +1,13 @@
-# Computer gain and loss for portfolii report.py
+# report.py  Compute gain and loss for portfolio
 #
-# Exercise 4.6: Using Inheritance to Produce Different Output
+# Exercise 4.8 Putting it all together.
 #
 # Usage report.py portfoliofile pricesfile
 #
 
 import fileparse
 from stock import Stock
-#from tableformat import TableFormatter
-#from tableformat import TextTableFormatter
-#from tableformat import CSVTableFormatter
-from tableformat import HTMLTableFormatter
+from tableformat import TableFormatter
 
 def read_portfolio(filename):
     with open('Data/portfolio.csv') as lines:
@@ -38,8 +35,8 @@ def make_report_data(original_portfolio, current_prices):
 
 def print_report(stocklist, formatter):
     '''
-    # Print a formatted table from a list of (name, shares, price, change) tuples.
-    # Print format is specified by formatter.
+    Print a formatted table from a list of (name, shares, price, change) tuples.
+    Print format is specified by formatter.
     '''
 
     formatter.headings(['Name','Shares','Price','Change'])
@@ -47,25 +44,27 @@ def print_report(stocklist, formatter):
         rowdata = [name, str(shares), f'{price:0.2f}', f'{change:0.2f}']
         formatter.row(rowdata)
 
-def portfolio_report(portfolio_file, prices_file):
+def portfolio_report(portfolio_file, prices_file, format):
     portfolio = read_portfolio(portfolio_file)
     prices = read_prices(prices_file)
     report = make_report_data(portfolio, prices)
-    #formatter = TextTableFormatter()
-    #formatter = CSVTableFormatter()
-    formatter = HTMLTableFormatter()
+    formatter = TableFormatter.create_formatter(format)
     print_report(report, formatter)
 
 def main(args):
-    if len(args) != 3:
+    if len(args) < 3:
         # portfolo_filename = 'Data/portfolio.csv'
         # prices_filename = 'Data/prices.csv'
-        raise SystemExit('Usage: %s portfoliofile pricefile' % args[0])
+        raise SystemExit('Usage: %s portfoliofile pricefile [format]' % args[0])
     else:
         portfolio_filename = args[1]
         prices_filename = args[2]
+        if len(args) == 4:
+            format = args[3]
+        else:
+            format = 'txt'
 
-    portfolio_report(portfolio_filename, prices_filename)
+    portfolio_report(portfolio_filename, prices_filename, format)
 
 if __name__ == '__main__':
     import sys
