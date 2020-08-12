@@ -1,6 +1,6 @@
 #
 # Section 4.1 Classes
-# Exercise 4.2 Adding some methods
+# Exercise 4.9 Better output for printing objects
 #
 # stock.py -- a class to represent stocks
 #
@@ -18,4 +18,10 @@ class Stock:
         self.shares -= numtosell
         return self.shares
 
+    def __repr__(self):
+        return f'Stock({self.name},{self.shares},{self.price})'
 
+    '''
+    def __str__(self):
+        return f'{self.name}-{self.shares}-{self.price}'
+    '''
