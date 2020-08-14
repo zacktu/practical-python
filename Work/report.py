@@ -7,7 +7,7 @@
 
 import fileparse
 from stock import Stock
-from tableformat import TableFormatter
+from tableformat import TableFormatter, create_formatter
 
 def read_portfolio(filename):
     with open('Data/portfolio.csv') as lines:
@@ -48,7 +48,7 @@ def portfolio_report(portfolio_file, prices_file, format):
     portfolio = read_portfolio(portfolio_file)
     prices = read_prices(prices_file)
     report = make_report_data(portfolio, prices)
-    formatter = TableFormatter.create_formatter(format)
+    formatter = create_formatter(format)
     print_report(report, formatter)
 
 def main(args):
