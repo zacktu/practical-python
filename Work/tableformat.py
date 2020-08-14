@@ -3,7 +3,7 @@
 #
 # Section 4.8 Putting it all together
 #
-# Exercise 4.6: Using Inheritance to Produce Different Output
+# Exercise 4.10: An example of using getattr()
 #
 
 class TableFormatter:
@@ -17,16 +17,7 @@ class TableFormatter:
         Emit a single row of table data.
         '''
 
-    def create_formatter(fmt):
-        if fmt == 'txt':
-            formatter = TextTableFormatter()
-        elif fmt == 'csv':
-            formatter = CSVTableFormatter()
-        elif fmt == 'html':
-            formatter = HTMLTableFormatter()
-        else:
-            raise RuntimeError(f'Unknown format {fmt}')
-        return formatter
+
 
 class TextTableFormatter(TableFormatter):
     '''
@@ -63,4 +54,19 @@ class HTMLTableFormatter(TableFormatter):
     def row(self, rowdata):
         print('<tr><td>'+'<td><td>'.join(rowdata)+'<td><tr>')
 
+def create_formatter(fmt):
+    if fmt == 'txt':
+        formatter = TextTableFormatter()
+    elif fmt == 'csv':
+        formatter = CSVTableFormatter()
+    elif fmt == 'html':
+        formatter = HTMLTableFormatter()
+    else:
+        raise RuntimeError(f'Unknown format {fmt}')
+    return formatter
 
+def print_table(objects, columns, formatter):
+    formatter.headings(columns)
+    for object in objects:
+        rowdata = [str(getattr(object, colname)) for colname in columns]
+        formatter.row(rowdata)
