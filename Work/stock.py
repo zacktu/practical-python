@@ -1,6 +1,6 @@
 #
 # Section 4.1 Classes
-# Exercise 4.9 Better output for printing objects
+# Exercise 5.6 Simple properties
 #
 # stock.py -- a class to represent stocks
 #
@@ -11,6 +11,7 @@ class Stock:
         self.shares = shares
         self.price = price
 
+    @property
     def cost(self):
         return self.shares * self.price
 
