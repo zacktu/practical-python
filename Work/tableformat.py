@@ -3,7 +3,7 @@
 #
 # Section 4.8 Putting it all together
 #
-# Exercise 4.10: An example of using getattr()
+# Exercise 4.11: Defining a custom exception
 #
 
 class TableFormatter:
@@ -62,7 +62,7 @@ def create_formatter(fmt):
     elif fmt == 'html':
         formatter = HTMLTableFormatter()
     else:
-        raise RuntimeError(f'Unknown format {fmt}')
+        raise FormatError('Unknown table format %s' % name)
     return formatter
 
 def print_table(objects, columns, formatter):
