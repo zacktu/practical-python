@@ -1,6 +1,6 @@
 #
 # Section 4.1 Classes
-# Exercise 5.6 Simple properties
+# Exercise 5.7: Properties and Setters
 #
 # stock.py -- a class to represent stocks
 #
@@ -10,6 +10,16 @@ class Stock:
         self.name = name
         self.shares = shares
         self.price = price
+
+    @property
+    def shares(self):
+        return self._shares
+
+    @shares.setter
+    def shares(self, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected int')
+        self._shares = value
 
     @property
     def cost(self):
