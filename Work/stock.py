@@ -1,11 +1,12 @@
 #
 # Section 4.1 Classes
-# Exercise 5.7: Properties and Setters
+# Exercise 5.8: Adding slots
 #
 # stock.py -- a class to represent stocks
 #
 
 class Stock:
+    __slots__ = ('name', '_shares', 'price')
     def __init__(self, name, shares, price):
         self.name = name
         self.shares = shares
