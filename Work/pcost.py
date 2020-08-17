@@ -7,7 +7,6 @@
 
 
 import report
-from stock import Stock
 
 def portfolio_cost(filename):
     """
@@ -15,7 +14,7 @@ def portfolio_cost(filename):
     """
     portfolio = report.read_portfolio(filename)
     total_cost = sum(stock.cost for stock in portfolio)
-    return total_cost
+    return portfolio.total_cost
 
 def main(args):
     if len(args) != 2:

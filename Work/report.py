@@ -1,23 +1,24 @@
 # report.py  Compute gain and loss for portfolio
 #
-# Exercise 4.8 Putting it all together.
+# Exercise 6.2: Supporting Iteration
 #
 # Usage report.py portfoliofile pricesfile
 #
 
 import fileparse
 from stock import Stock
+from portfolio import Portfolio
 from tableformat import TableFormatter, create_formatter
 
 def read_portfolio(filename):
-    with open('Data/portfolio.csv') as lines:
+    with open(filename) as file:
         portdicts = fileparse.parse_csv(
-                lines,
+                file,
                 select=['name', 'shares', 'price'],
                 types=[str, int, float])
         portfolio = [Stock(q['name'], q['shares'], q['price'])
                      for q in portdicts]
-        return portfolio
+        return Portfolio(portfolio)
 
 def read_prices(filename):
     with open(filename) as lines:
@@ -37,7 +38,8 @@ def make_report_data(original_portfolio, current_prices):
 
 def print_report(stocklist, formatter):
     '''
-    Print a formatted table from a list of (name, shares, price, change) tuples.
+    Print a formatted table from a list of
+        (name, shares, price, change) tuples.
     Print format is specified by formatter.
     '''
 
