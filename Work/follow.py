@@ -7,6 +7,7 @@
 import os
 import time
 
+
 def follow(filename):
     f = open('Data/stocklog.csv')
     f.seek(0, os.SEEK_END)  # Move file pointer 0 bytes from end of file
@@ -17,7 +18,8 @@ def follow(filename):
             continue
         yield line
 
-if (__name__ == '__main__'):
+
+if __name__ == '__main__':
     import report
 
     portfolio = report.read_portfolio('Data/portfolio.csv')
