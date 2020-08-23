@@ -1,9 +1,7 @@
 #
 # tableformat.py
 #
-# Section 4.8 Putting it all together
-#
-# Exercise 4.11: Defining a custom exception
+# Exercise 6.12: Putting it all together
 #
 
 class TableFormatter:
@@ -54,6 +52,9 @@ class HTMLTableFormatter(TableFormatter):
     def row(self, rowdata):
         print('<tr><td>'+'<td><td>'.join(rowdata)+'<td><tr>')
 
+class FormatError(Exception):
+    pass
+
 def create_formatter(fmt):
     if fmt == 'txt':
         formatter = TextTableFormatter()
@@ -62,7 +63,7 @@ def create_formatter(fmt):
     elif fmt == 'html':
         formatter = HTMLTableFormatter()
     else:
-        raise FormatError('Unknown table format %s' % name)
+        raise FormatError(f'Invalid table format {fmt}')
     return formatter
 
 def print_table(objects, columns, formatter):

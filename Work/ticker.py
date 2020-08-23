@@ -1,14 +1,13 @@
 #
 # ticker.py
 #
-# Exercise 6.12 Puttint it all together
+# Exercise 6.12 Putting it all together
 #
 # Selects columns from a pipeline
 #
 
-
+import tableformat
 from report import read_portfolio
-from report import portfolio_report
 from follow import follow
 import csv
 
@@ -36,30 +35,29 @@ def parse_stock_data(lines):
     rows = make_dicts(rows, ['name', 'price', 'change'])
     return rows
 
+def ticker(portfile, logfile, format):
+    portfolio = read_portfolio(portfile)
+    rows = parse_stock_data(follow(logfile))
+    rows = filter_symbols(rows, portfolio)
+    formatter = tableformat.create_formatter(format)
+    formatter.headings(['Name', 'Price', 'Change'])
+    for row in rows:
+        formatter.row([row['name'], f"{row['price']:0.2f}", f"{row['change']:0.2f}"])
+
 def main(args):
     if len(args) < 3:
         # portfolo_filename = 'Data/portfolio.csv'
-        # prices_filename = 'Data/prices.csv'
+        # stocklog_filename = 'Data/stocklog.csv'
         raise SystemExit\
-            ('Usage: %s portfoliofile pricefile [format]' % args[0])
+            ('Usage: %s portfoliofile stocklogfile [format]' % args[0])
     else:
         portfolio_filename = args[1]
-        prices_filename = args[2]
+        stocklog_filename = args[2]
         if len(args) == 4:
             format = args[3]
         else:
             format = 'txt'
-
-    portfolio = read_portfolio(portfolio_filename)
-    rows = parse_stock_data(follow(prices_filename))
-    rows = filter_symbols(rows, portfolio)
-    for row in rows:
-        lst = []
-        for i in row:
-            lst.append(row[i])
-        tple = tuple(lst)
-        print(tple)
-
+    ticker(portfolio_filename, stocklog_filename, format)
 
 if __name__ == '__main__':
     import sys
