@@ -1,6 +1,6 @@
 # report.py  Compute gain and loss for portfolio
 #
-# Exercise 6.2: Supporting Iteration
+# Exercise 7.3: Creating a list of instances
 #
 # Usage report.py portfoliofile pricesfile
 #
@@ -16,8 +16,7 @@ def read_portfolio(filename):
                 file,
                 select=['name', 'shares', 'price'],
                 types=[str, int, float])
-        portfolio = [Stock(q['name'], q['shares'], q['price'])
-                     for q in portdicts]
+        portfolio = [Stock(**d) for d in portdicts]
         return Portfolio(portfolio)
 
 def read_prices(filename):
