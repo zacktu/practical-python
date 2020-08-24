@@ -1,6 +1,8 @@
 #
 # typedproperty.py
 #
+# Exercise 7.9: Putting it into practice
+#
 # Define a class with property types for members
 #
 
@@ -23,6 +25,8 @@ def typedproperty(name, expected_type):
 String = lambda name: typedproperty(name, str)
 Integer = lambda name: typedproperty(name, int)
 Float = lambda name: typedproperty(name, float)
+
+#  TESTING
 
 if __name__ == '__main__':
     class Stock:
