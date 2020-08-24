@@ -3,7 +3,7 @@
 #
 # Define class to contain a stock portfolio
 #
-# Exercise 6.3: Making a more proper container
+# Exercise 6.14: Generator Expressions in Function Arguments
 #
 
 class Portfolio:
@@ -24,7 +24,7 @@ class Portfolio:
 
     @property
     def total_cost(self):
-        return sum([s.shares * s.price for s in self._holdings])
+        return sum(s.shares * s.price for s in self._holdings)
 
     def tabulate_shares(self):
         from collections import Counter
