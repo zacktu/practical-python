@@ -1,6 +1,6 @@
 # report.py  Compute gain and loss for portfolio
 #
-# Exercise 7.3: Creating a list of instances
+# Exercise 7.4: Argument pass-through
 #
 # Usage report.py portfoliofile pricesfile
 #
@@ -10,12 +10,13 @@ from stock import Stock
 from portfolio import Portfolio
 from tableformat import TableFormatter, create_formatter
 
-def read_portfolio(filename):
-    with open(filename) as file:
+def read_portfolio(filename, **opts):
+    with open(filename) as lines:
         portdicts = fileparse.parse_csv(
-                file,
+                lines,
                 select=['name', 'shares', 'price'],
-                types=[str, int, float])
+                types=[str, int, float],
+                **opts)
         portfolio = [Stock(**d) for d in portdicts]
         return Portfolio(portfolio)
 
